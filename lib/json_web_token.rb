@@ -2,7 +2,6 @@ class JsonWebToken
     HMAC_SECRET = Rails.application.credentials.hmac[:secret]
 
     def self.encode(payload, exp = 24.hours.from_now)
-        # set expiry to 24 hours from creation time
         payload[:exp] = exp.to_i
         # sign token with application secret
         JWT.encode(payload, HMAC_SECRET)
@@ -11,8 +10,7 @@ class JsonWebToken
     def self.decode(token)
         begin
             HashWithIndifferentAccess.new(JWT.decode(token, HMAC_SECRET)[0])
-        rescue JWT::ExpiredSignature => e
-            # raise custom error to be handled by custom handler
+        rescue JWT::ExpiredSignature, JWT::DecodeError => e
             raise ExceptionHandler::InvalidToken, e.message
         end
     end

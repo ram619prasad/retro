@@ -14,7 +14,7 @@ SimpleCov.start 'rails' do
   add_filter "app/jobs/application_job.rb"
 end
 
-Dir[Rails.root.join('lib/*.rb')].each {|file| load file }
+Dir[Rails.root.join('lib/*.rb', 'commands/*.rb')].each {|file| load file }
 
 # Rails.application.eager_load!
 

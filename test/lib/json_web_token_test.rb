@@ -37,5 +37,15 @@ class JsonWebTokenTest < ActiveSupport::TestCase
                 assert_equal 'Signature has expired', error.message
             end
         end
+
+        context 'DecodeError' do
+            should 'return raise ExceptionHandler::InvalidToken exception' do
+                error = assert_raises ExceptionHandler::InvalidToken do
+                    JsonWebToken.decode('invalid_token')
+                end
+                
+                assert_equal 'Not enough or too many segments', error.message
+            end
+        end
     end
 end
