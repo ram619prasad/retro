@@ -4,6 +4,8 @@ require 'rails/test_help'
 require 'parallel_tests/test/runtime_logger' if ENV['RECORD_RUNTIME']
 require 'database_cleaner'
 require 'simplecov'
+require 'minitest/unit'
+require 'mocha/minitest'
 
 
 SimpleCov.start 'rails' do
@@ -11,6 +13,10 @@ SimpleCov.start 'rails' do
   add_filter "app/models/application_record.rb"
   add_filter "app/jobs/application_job.rb"
 end
+
+Dir[Rails.root.join('lib/*.rb')].each {|file| load file }
+
+# Rails.application.eager_load!
 
 DatabaseCleaner.strategy = :truncation
 
