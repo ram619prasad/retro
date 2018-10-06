@@ -12,16 +12,13 @@ SimpleCov.start 'rails' do
   add_filter "app/mailers/application_mailer.rb"
   add_filter "app/models/application_record.rb"
   add_filter "app/jobs/application_job.rb"
+  add_filter "app/controllers/concerns/"
+  add_filter "app/models/concerns/"
 end
 
 Dir[Rails.root.join('lib/*.rb', 'commands/*.rb')].each {|file| load file }
-
-# Rails.application.eager_load!
-
 DatabaseCleaner.strategy = :truncation
 
-# then, whenever you need to clean the DB
-# DatabaseCleaner.clean
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.

@@ -16,18 +16,14 @@ module ExceptionHandler
     end
 
     def not_found(e)
-        json_response({message: e.message}, :not_found)
+        json_response({message: e.message}, '404')
+    end
+
+    def unauthorized_request(e)
+        json_response({message: e.message}, '401')
     end
 
     def unprocessible_entity(e)
         json_response({message: e.message}, '422')
-    end
-
-    def unauthorized_request(e)
-        json_response({message: e.message}, :unauthorized)
-    end
-
-    def unauthorized_request(e)
-        json_response({message: e.message}, :unauthorized)
     end
 end
