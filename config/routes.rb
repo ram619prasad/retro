@@ -8,8 +8,18 @@ Rails.application.routes.draw do
         collection do
           post 'signin', to: 'users#signin'
           post 'signup', to: 'users#signup'
-          get 'profile', to: 'users#profile'
         end
+
+        member do
+          get 'profile', to: 'users#show'
+          get 'boards', to: 'boards#user_boards'
+        end
+      end
+
+      resources :boards do
+        # collection do
+        #   get 'my_boards', to: 'boards#user_boards'
+        # end
       end
 
     end
