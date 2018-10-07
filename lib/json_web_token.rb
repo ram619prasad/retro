@@ -1,5 +1,5 @@
 class JsonWebToken
-    HMAC_SECRET = Rails.application.credentials.hmac[:secret]
+    HMAC_SECRET = Rails.application.credentials.hmac_secret { raise "it seems you didn't configure hmac secret" }
 
     def self.encode(payload, exp = 24.hours.from_now)
         payload[:exp] = exp.to_i

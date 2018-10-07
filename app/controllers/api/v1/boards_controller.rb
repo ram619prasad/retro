@@ -44,11 +44,12 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def set_board
-        begin
-            @board = Board.active.find(params[:id])
-        rescue ActiveRecord::RecordNotFound => e
-            json_response({errors: "The board you are trying to look has been deleted. Could not perform #{action_name} now."}, '400')
-        end
+        @board = Board.active.find(params[:id])
+        # begin
+        #     @board = Board.active.find(params[:id])
+        # rescue ActiveRecord::RecordNotFound => e
+        #     json_response({errors: "The board you are trying to look has been deleted. Could not perform #{action_name} now."}, '400')
+        # end
     end
 
     def set_user
