@@ -6,7 +6,9 @@ require 'database_cleaner'
 require 'simplecov'
 require 'minitest/unit'
 require 'mocha/minitest'
+require "minitest/reporters"
 
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 SimpleCov.start 'rails' do
   add_filter "app/mailers/application_mailer.rb"

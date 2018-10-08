@@ -57,6 +57,7 @@ group :test do
   gem 'shoulda-matchers', '~> 2.0'
   gem 'simplecov'
   gem 'mocha'
+  gem 'minitest-reporters'
 end
 
 # Authentication 
