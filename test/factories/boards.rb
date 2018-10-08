@@ -1,7 +1,11 @@
 FactoryBot.define do
   factory :board do
-    title { "MyString" }
-    agenda { "MyText" }
-    user { nil }
+    user
+    title { Faker::Lorem.word }
+    agenda { Faker::Lorem.sentence(rand(2..10)) }
+
+    trait :deleted do
+      deleted { true }
+    end
   end
 end
