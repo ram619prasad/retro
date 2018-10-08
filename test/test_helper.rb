@@ -32,4 +32,16 @@ class ActiveSupport::TestCase
   def teardown
     DatabaseCleaner.clean
   end
+
+  # For generating api_token which can be used in testing controller actions
+  def api_token
+    user = FactoryBot.create(:user)
+    payload = { user_id: user.id }
+    JsonWebToken.encode(payload)
+  end
+
+  def json_response
+    JSON.parse(@response.body)
+  end
+
 end

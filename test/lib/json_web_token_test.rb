@@ -4,7 +4,7 @@ class JsonWebTokenTest < ActiveSupport::TestCase
     setup do
         @user = FactoryBot.create(:user)
         @exp = 1.minutes.from_now
-        @secret = Rails.application.credentials.hmac[:secret]
+        @secret = Rails.application.credentials.hmac_secret
         @payload = { user_id: @user.id }
     end
   

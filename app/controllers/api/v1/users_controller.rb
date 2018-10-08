@@ -9,8 +9,8 @@ class Api::V1::UsersController < ApplicationController
     def signup
         user = User.new(user_params)
         if user.save
-            api_token = AuthenticateUser.call(user.email, user.password)
-            render json: user, status: 201
+            api_token = AuthenticateUser.call(user.email, user.password).result
+            json_response({ api_token: api_token }, :created)
         else
             json_response({errors: user.errors}, '422')
         end
