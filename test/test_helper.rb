@@ -40,6 +40,11 @@ class ActiveSupport::TestCase
     JsonWebToken.encode(payload)
   end
 
+  def current_user(token)
+    user_id = JsonWebToken.decode(token)["user_id"]
+    User.find(user_id)
+  end
+
   def json_response
     JSON.parse(@response.body)
   end
