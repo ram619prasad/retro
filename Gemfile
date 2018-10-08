@@ -65,6 +65,9 @@ gem 'jwt'
 # For facilitating the communication btw Controllers and Models
 gem 'simple_command'
 
+# For pagination
+gem 'kaminari'
+
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

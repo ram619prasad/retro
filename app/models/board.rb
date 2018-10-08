@@ -2,6 +2,10 @@ class Board < ApplicationRecord
   # Associations
   belongs_to :user
 
+  # Only allows user to get 50 boards if the per_page param is more than 50
+  max_paginates_per 50
+  paginates_per 20
+
   # Scopes
   scope :active, -> { where(deleted: false)}
   scope :deleted, -> { where(deleted: true)}

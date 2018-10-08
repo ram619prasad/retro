@@ -13,7 +13,7 @@ class Api::V1::BoardsController < ApplicationController
 
     def destroy
         if @board.update(deleted: true)
-            render json: @board, status: 200
+            render json: @board
         else
             json_response({errors: @board.errors}, '422')
         end
@@ -21,7 +21,7 @@ class Api::V1::BoardsController < ApplicationController
 
     def update
         if @board.update(board_params)
-            render json: @board, status: 200
+            render json: @board
         else
             json_response({errors: @board.errors}, '422')
         end
@@ -29,12 +29,24 @@ class Api::V1::BoardsController < ApplicationController
 
     def show
         board = Board.find(params[:id])
-        render json: board, status: 200
+        render json: board
     end
 
     def user_boards
         boards = @user.boards
-        render json: boards, status: 200
+        render json: boards
+    end
+
+    def my_boards
+        boards = @current_user.boards
+        render json: boards
+    end
+
+    def index
+        page = params[:page][:number] || 1
+        per = params[:per_page]
+        @boards = Board.page(page).per(per)
+        render json: @boards
     end
 
 

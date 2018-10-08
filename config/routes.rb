@@ -17,9 +17,9 @@ Rails.application.routes.draw do
       end
 
       resources :boards do
-        # collection do
-        #   get 'my_boards', to: 'boards#user_boards'
-        # end
+        collection do
+          get 'my_boards', to: 'boards#my_boards'
+        end
       end
 
     end
