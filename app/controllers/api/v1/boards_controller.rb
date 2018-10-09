@@ -1,5 +1,6 @@
 class Api::V1::BoardsController < ApplicationController
-    before_action :set_board, except: [:index, :create, :show, :user_boards]
+    load_resource only: :show
+    load_and_authorize_resource only: [:update, :destroy]
     before_action :set_user, only: :user_boards
 
     def create
@@ -12,14 +13,12 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def destroy
-        if @board.update(deleted: true)
-            render json: @board
-        else
-            json_response({errors: @board.errors}, '422')
-        end
+        render json: @board if @board.update(deleted: true)
     end
 
     def update
+        authorize! :update, @board
+
         if @board.update(board_params)
             render json: @board
         else
@@ -28,8 +27,7 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def show
-        board = Board.find(params[:id])
-        render json: board
+        render json: @board
     end
 
     def user_boards
@@ -43,7 +41,7 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def index
-        page = params[:page][:number] || 1
+        page = params[:page].try(:[], :number) || 1
         per = params[:per_page]
         @boards = Board.page(page).per(per)
         render json: @boards
@@ -53,15 +51,6 @@ class Api::V1::BoardsController < ApplicationController
     private
     def board_params
         params.permit(:title, :agenda, :user_id)
-    end
-
-    def set_board
-        @board = Board.active.find(params[:id])
-        # begin
-        #     @board = Board.active.find(params[:id])
-        # rescue ActiveRecord::RecordNotFound => e
-        #     json_response({errors: "The board you are trying to look has been deleted. Could not perform #{action_name} now."}, '400')
-        # end
     end
 
     def set_user

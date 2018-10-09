@@ -13,6 +13,7 @@ module ExceptionHandler
         rescue_from ActiveRecord::RecordInvalid, with: :unprocessible_entity
         rescue_from ExceptionHandler::MissingToken, with: :unauthorized_request
         rescue_from ExceptionHandler::InvalidToken, with: :unprocessible_entity
+        rescue_from CanCan::AccessDenied, with: :forbidden
     end
 
     def not_found(e)
@@ -25,5 +26,9 @@ module ExceptionHandler
 
     def unprocessible_entity(e)
         json_response({message: e.message}, '422')
+    end
+
+    def forbidden
+        json_response({message: 'You are not authorized to perform this action'}, '403')
     end
 end
