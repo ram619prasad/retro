@@ -3,6 +3,7 @@ require 'test_helper'
 class BoardTest < ActiveSupport::TestCase
   # Associations
   should belong_to(:user)
+  should have_many(:columns)
 
   # Validations
   should validate_presence_of(:title)
