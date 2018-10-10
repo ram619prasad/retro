@@ -30,9 +30,16 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
     if user.present?
+      # Board abilities
       can [ :update, :destroy ], Board do |board|
         board.user_id == user.id
-      end 
+      end
+
+      can [:create, :destroy, :update], Column, board: { user_id: user.id }
+      # can :update, Column do |col|
+      #   byebug
+      #   col.board.user_id == user.id
+      # end
     end
   end
 

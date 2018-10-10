@@ -19,7 +19,7 @@ class Api::V1::BoardsController < ApplicationController
     def update
         authorize! :update, @board
 
-        if @board.update(board_params)
+        if @board.update_attributes(board_params)
             render json: @board
         else
             json_response({errors: @board.errors}, '422')

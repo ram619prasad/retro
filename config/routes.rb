@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :columns
     end
   end
 end
