@@ -37,16 +37,14 @@ class Ability
 
       can [:destroy, :update], Column, board: { user_id: user.id }
 
-      # can [:create, :destroy, :update], ActionItem, column: { user_id: user.id }
-      # can :update, Column do |col|
-      #   byebug
-      #   col.board.user_id == user.id
-      # end
+      can [:create, :update], ActionItem do |at|
+        at.column.user == user
+      end
 
-      # can [:create], Column do |col|
-      #   byebug
-      #   # user.boards.include?
-      # end
+      can :destroy, ActionItem do |at|
+        # byebug
+        at.user == user
+      end
 
     end
   end

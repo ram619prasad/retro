@@ -1,6 +1,7 @@
 class Column < ApplicationRecord
   # Associations
   belongs_to :board
+  belongs_to :user
   has_many :action_items, dependent: :destroy
 
   # Validations

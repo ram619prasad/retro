@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
       resources :columns
 
-      # resources :action_items
+      resources :action_items
     end
   end
 end
