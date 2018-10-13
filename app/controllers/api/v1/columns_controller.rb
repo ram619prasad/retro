@@ -1,12 +1,14 @@
 class Api::V1::ColumnsController < ApplicationController
-    before_action :find_active_board, only: [:create]
-    before_action :find_users_active_board, only: :update
+    load_resource :board, only: [:create]
+    before_action :authorize_board, only: [:create]
+    # before_action :find_active_board, only: [:create]
+    # before_action :find_users_active_board, only: :update
 
     load_resource
-    authorize_resource except: [:show]
+    authorize_resource except: [:show, :create]
 
     def create
-        column = @board.columns.new(column_params)
+        column = @board.columns.new(column_params.merge!({user_id: current_user.id}))
         if column.save
             render json: column, status: :created
         else
@@ -19,7 +21,7 @@ class Api::V1::ColumnsController < ApplicationController
     end
 
     def destroy
-        render json: @column if @column.update(deleted: true)
+        render json: @column if @column.update_attributes(deleted: true)
     end
 
     def update
@@ -32,6 +34,10 @@ class Api::V1::ColumnsController < ApplicationController
 
 
     private
+    def authorize_board
+        authorize! :update, (@board)
+    end
+
     def column_params
         params.permit(:name, :hex_code, :board_id, :deleted)
     end

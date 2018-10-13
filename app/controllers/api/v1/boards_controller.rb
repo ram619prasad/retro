@@ -27,7 +27,7 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def show
-        render json: @board, include: [:column]
+        render json: @board
     end
 
     def user_boards
