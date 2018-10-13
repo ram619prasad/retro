@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       end
 
       resources :columns
+
+      resources :action_items
     end
   end
 end

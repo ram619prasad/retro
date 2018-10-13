@@ -1,6 +1,7 @@
 class Column < ApplicationRecord
   # Associations
   belongs_to :board
+  has_many :action_items, dependent: :destroy
 
   # Validations
   validates_presence_of :name, :hex_code

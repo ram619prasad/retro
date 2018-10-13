@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
     # Associations
     has_many :boards, dependent: :destroy
+    has_many :columns, through: :boards
+    has_many :action_items, through: :columns
 
     # Validations
     validates_presence_of :email
