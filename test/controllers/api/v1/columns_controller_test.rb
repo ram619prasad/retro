@@ -65,6 +65,60 @@ class Api::V1::ColumnsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  context '#show' do
+    context 'unauthorized' do
+      should 'render unauthorized response' do
+        get api_v1_column_url(@current_user_column.id)
+        unauthorized_route_assertions
+      end
+    end
+
+    context 'authorized' do
+      should 'return the column json_response' do
+        get api_v1_column_url(@current_user_column.id), headers: { Authorization: @api_token }
+        assert_response :ok
+
+        column_response(json_response)
+        column_assertions(json_response['data']['attributes'], @current_user_column)
+      end
+
+      should 'return not_found when invalid board id is requested' do
+        get api_v1_column_url('123456'), headers: { Authorization: @api_token }
+        assert_response :not_found
+      end
+    end
+  end
+
+  context '#update' do
+    context 'unauthorized' do
+      should 'render unauthorized response' do
+        patch api_v1_column_url(@current_user_column.id)
+        unauthorized_route_assertions
+      end
+    end
+
+    context 'authorized' do
+      should 'be able to update' do
+        patch api_v1_column_url(@current_user_column.id), params: { name: 'Column Updated' }, headers: { Authorization: @api_token }
+        assert_response :success
+
+        column_response(json_response)
+        column_assertions(json_response['data']['attributes'], @current_user_column.reload)
+      end
+
+      should 'not be able to update other user board columns' do
+        patch api_v1_column_url(@user_column.id), params: { name: 'Column Updated' }, headers: { Authorization: @api_token }
+        forbidden_assertions
+      end
+
+      should 'not update the board when invalid params are passed' do
+        patch api_v1_column_url(@current_user_column.id), params: { name: '' }, headers: { Authorization: @api_token }
+        assert_response :bad_request
+        assert json_response.has_key?('errors')
+      end
+    end
+  end
+
   private
   def column_response(response)
     assert response.has_key?('data')
