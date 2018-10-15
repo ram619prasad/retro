@@ -53,7 +53,7 @@ class Api::V1::BoardsControllerTest < ActionDispatch::IntegrationTest
         delete api_v1_board_url(@board.id), headers: { Authorization: @api_token }
         assert_response :ok
 
-        board = Board.where(id: @board.id).first
+        board = Board.unscoped.where(id: @board.id).first
         assert board.deleted
       end
 
@@ -163,7 +163,6 @@ class Api::V1::BoardsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-
   context '#index' do
     context 'unauthorized' do
       should 'render unauthorized response' do
@@ -213,25 +212,11 @@ class Api::V1::BoardsControllerTest < ActionDispatch::IntegrationTest
         assert_equal query_params(json_response['links']['first'])["page[number]"][0], "1"
         assert_equal query_params(json_response['links']['prev'])["page[number]"][0], "1"
         assert_equal query_params(json_response['links']['last'])["page[number]"][0], "2"
-
-        # puts json_response['links']['self']
-        # puts json_response['links']['first']
-        # puts json_response['links']['prev']
-        # puts json_response['links']['next']
-        # puts json_response['links']['last']
       end
     end
   end
 
-
-
-
   private
-  def unauthorized_route_assertions
-    assert_response :unauthorized
-    assert json_response.has_key?('message')
-    assert_equal "Invalid request. No Authorization token present in headers.", json_response['message']
-  end
 
   def board_response(response)
     assert response.has_key?('data')
@@ -258,12 +243,6 @@ class Api::V1::BoardsControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected['email'], actual.email
     assert_equal expected['title'], actual.title
     assert_equal expected['boards'], actual.boards.count
-  end
-
-  def forbidden_assertions
-    assert_response :forbidden
-    assert json_response.has_key?('message')
-    assert_equal 'You are not authorized to perform this action', json_response['message']
   end
 
   def pagination_assertions(pagination_links)

@@ -13,7 +13,7 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def destroy
-        render json: @board if @board.update(deleted: true)
+        render json: @board if @board.update_attributes(deleted: true)
     end
 
     def update

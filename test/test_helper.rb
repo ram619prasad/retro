@@ -51,4 +51,16 @@ class ActiveSupport::TestCase
     JSON.parse(@response.body)
   end
 
+  def unauthorized_route_assertions
+    assert_response :unauthorized
+    assert json_response.has_key?('message')
+    assert_equal "Invalid request. No Authorization token present in headers.", json_response['message']
+  end
+
+  def forbidden_assertions
+    assert_response :forbidden
+    assert json_response.has_key?('message')
+    assert_equal 'You are not authorized to perform this action', json_response['message']
+  end
+
 end

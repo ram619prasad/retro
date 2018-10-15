@@ -11,7 +11,7 @@ class Board < ApplicationRecord
   # Scopes
   default_scope {where('deleted is not true')}
   scope :active, -> { where(deleted: false)}
-  scope :deleted, -> { where(deleted: true)}
+  scope :deleted, -> { unscoped.where(deleted: true) }
 
   # Validations
   validates_presence_of :title, :user_id
