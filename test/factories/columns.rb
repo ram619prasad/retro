@@ -4,11 +4,11 @@ FactoryBot.define do
     name { Faker::Lorem.word }
     hex_code { "#431990" }
 
-    before(:create) do |col|
-      board = FactoryBot.create(:board)
-      col.user = board.user
-      col.board = board
-    end
+    # before(:create) do |col|
+    #   board = FactoryBot.create(:board)
+    #   col.user = board.user
+    #   col.board = board
+    # end
 
     trait :deleted do
       deleted { true }

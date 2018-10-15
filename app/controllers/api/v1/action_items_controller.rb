@@ -9,7 +9,7 @@ class Api::V1::ActionItemsController < ApplicationController
        if action_item.save
             render json: action_item, status: :created
        else
-            json_response({errors: action_item.errors}, :unprocessible_entity)
+            json_response({errors: action_item.errors}, :unprocessable_entity)
        end
     end
 
