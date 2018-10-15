@@ -6,6 +6,4 @@ class UserSerializer < ActiveModel::Serializer
   def boards
     object.boards.size
   end
-  
-
 end

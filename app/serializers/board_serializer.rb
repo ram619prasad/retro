@@ -4,7 +4,7 @@ class BoardSerializer < ActiveModel::Serializer
   # has_many :columns
 
   def user
-      ::UserSerializer.new(object.user).attributes
+    ::UserSerializer.new(object.user).attributes
   end
 
   def columns

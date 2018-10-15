@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://rubygems.org' # frozen_string_literal: true
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.4.0'
@@ -28,40 +28,43 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Json Serializer
 gem 'active_model_serializers'
 
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS),
+# making cross-origin AJAX possible
 gem 'rack-cors'
 
 # Whitelisting/Blacklisting/Throttling and Tracking users info
 gem 'rack-attack'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # Call 'byebug' anywhere in the code to stop execution and
+  # get a debugger console
   gem 'byebug'
-  gem 'pry-byebug'
-  gem 'parallel_tests'
   gem 'factory_bot_rails'
+  gem 'parallel_tests'
+  gem 'pry-byebug'
 end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Spring speeds up development by keeping your application running
+  # in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 # Testing Suite Gems
 group :test do
-  gem 'test-unit'
-  gem 'faker'
   gem 'database_cleaner'
+  gem 'faker'
+  gem 'minitest-reporters'
+  gem 'mocha'
   gem 'shoulda', '~> 3.5'
   gem 'shoulda-matchers', '~> 2.0'
   gem 'simplecov'
-  gem 'mocha'
-  gem 'minitest-reporters'
+  gem 'test-unit'
 end
 
-# Authentication 
+# Authentication
 gem 'jwt'
 
 # For facilitating the communication btw Controllers and Models
@@ -73,6 +76,5 @@ gem 'kaminari'
 # Authorizing actions
 gem 'cancancan', '~> 2.0'
 
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# Static code analyzer
+gem 'rubocop'

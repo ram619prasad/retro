@@ -1,3 +1,4 @@
+# ActionItem Model
 class ActionItem < ApplicationRecord
   # Associations
   belongs_to :user
