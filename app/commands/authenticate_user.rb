@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Consists of all the authentication logic
 class AuthenticateUser
   prepend SimpleCommand
 
@@ -11,13 +14,14 @@ class AuthenticateUser
   end
 
   private
+
   attr_accessor :email, :password
 
   def user
     user = User.find_by(email: email)
     raise(ActiveRecord::RecordNotFound, 'Sorry! Invalid email') unless user
-    return user if user && user.authenticate(password)
-    # raise Authentication error if credentials are invalid
+    return user if user &.authenticate(password)
+
     raise(ExceptionHandler::AuthenticationError, 'Invalid Password')
   end
 end

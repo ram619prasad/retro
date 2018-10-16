@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Consists of all the authorizing logic
 class AuthorizeUser
   prepend SimpleCommand
 
@@ -7,20 +10,18 @@ class AuthorizeUser
 
   def call
     {
-        user: user
+      user: user
     }
   end
 
-  
   private
+
   attr_reader :headers
 
   def user
-    begin
-        @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
-    rescue ActiveRecord::RecordNotFound => e
-        raise(ExceptionHandler::InvalidToken, 'Invalid Token')
-    end
+    @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+  rescue ActiveRecord::RecordNotFound
+    raise(ExceptionHandler::InvalidToken, 'Invalid Token')
   end
 
   def decoded_auth_token
@@ -29,9 +30,10 @@ class AuthorizeUser
 
   def http_auth_header
     if headers['Authorization'].present?
-        return headers['Authorization'].split(' ').last
+      return headers['Authorization'].split(' ').last
     end
 
-    raise(ExceptionHandler::MissingToken, 'Invalid request. No Authorization token present in headers.')
+    raise(ExceptionHandler::MissingToken, 'Invalid request. ' \
+      'No Authorization token present in headers.')
   end
 end
