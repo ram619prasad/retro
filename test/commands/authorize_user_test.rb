@@ -17,12 +17,12 @@ class AuthorizeUserTest < ActiveSupport::TestCase
 
     should 'raise ExceptionHandler::MissingToken when no' \
            'authorization header is sent' do
-      assert_raises ExceptionHandler::MissingToken do
+      exception = assert_raises ExceptionHandler::MissingToken do
         AuthorizeUser.call({})
       end
 
       assert_equal 'Invalid request. No Authorization token' \
-                   'present in headers.', exception.message
+                   ' present in headers.', exception.message
     end
 
     should 'raise ExceptionHandler::InvalidToken when an invalid' \
@@ -36,7 +36,7 @@ class AuthorizeUserTest < ActiveSupport::TestCase
     should 'raise ExceptionHandler::InvalidToken when a user is not' \
            'found with the given token' do
       @user.destroy
-      assert_raises ExceptionHandler::InvalidToken do
+      exception = assert_raises ExceptionHandler::InvalidToken do
         AuthorizeUser.call(@headers)
       end
 

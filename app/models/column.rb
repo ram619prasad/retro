@@ -20,7 +20,7 @@ class Column < ApplicationRecord
   def hex_code_validation
     return unless hex_code
 
-    errors.add(:hex_code, 'Invalid hexcode') if hex_code.length == 4 ||
-                                                hex_code.length == 7
+    errors.add(:hex_code, 'Invalid hexcode') unless hex_code.length == 4 ||
+                                                    hex_code.length == 7
   end
 end
