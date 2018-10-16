@@ -32,7 +32,7 @@ module Api
 
       def destroy
         params = { deleted: true }
-        render json: @action_item if @action_item.update_attributes(deleted: true)
+        render json: @action_item if @action_item.update_attributes(params)
       end
 
       private
