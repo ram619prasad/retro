@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Module which is responsible for handling all the exception
+# that are raised in the app.
 module ExceptionHandler
   extend ActiveSupport::Concern
 
@@ -8,27 +12,30 @@ module ExceptionHandler
 
   included do
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
-    rescue_from ExceptionHandler::AuthenticationError, with: :unprocessible_entity
-    rescue_from ExceptionHandler::AuthorizationError, with: :unauthorized_request
+    rescue_from ExceptionHandler::AuthenticationError,
+                with: :unprocessible_entity
+    rescue_from ExceptionHandler::AuthorizationError,
+                with: :unauthorized_request
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessible_entity
     rescue_from ExceptionHandler::MissingToken, with: :unauthorized_request
     rescue_from ExceptionHandler::InvalidToken, with: :unprocessible_entity
     rescue_from CanCan::AccessDenied, with: :forbidden
   end
 
-  def not_found(e)
-    json_response({message: e.message}, '404')
+  def not_found(err)
+    json_rrrsponse({ message: err.message }, :not_found)
   end
 
-  def unauthorized_request(e)
-    json_response({message: e.message}, '401')
+  def unauthorized_request(err)
+    json_response({ message: err.message }, :unauthorized_request)
   end
 
-  def unprocessible_entity(e)
-    json_response({message: e.message}, '422')
+  def unprocessible_entity(err)
+    json_response({ message: err.message }, :unprocessible_entity)
   end
 
   def forbidden
-    json_response({message: 'You are not authorized to perform this action'}, '403')
+    json_response({ message: 'You are not authorized to' \
+                    'perform this action' }, :forbidden)
   end
 end

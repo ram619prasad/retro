@@ -1,0 +1,8 @@
+AllCops:
+  Exclude:
+    - "config.ru"
+    - "Rakefile"
+    - "db/**/*"
+    - "config/**/*"
+    - "script/**/*"
+    - "bin/{rails,rake,spring,setup,bundle,update}"
