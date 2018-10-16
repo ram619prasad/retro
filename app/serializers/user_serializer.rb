@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# User Json Serializer
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :email, :title, :boards, :created_at, :updated_at
 

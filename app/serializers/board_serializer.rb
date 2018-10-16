@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
+# Board Json Serializer
 class BoardSerializer < ActiveModel::Serializer
-  attributes :id, :title, :agenda, :deleted, :created_at, :updated_at, :user, :columns
+  attributes :id, :title, :agenda, :deleted, :created_at, :updated_at,
+             :user, :columns
 
   # has_many :columns
 

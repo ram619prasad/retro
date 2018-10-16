@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ActionItem Model
 class ActionItem < ApplicationRecord
   # Associations

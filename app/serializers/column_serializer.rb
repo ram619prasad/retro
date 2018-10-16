@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Column Json Serializer
 class ColumnSerializer < ActiveModel::Serializer
   attributes :id, :name, :hex_code, :deleted
 

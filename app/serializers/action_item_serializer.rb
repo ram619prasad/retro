@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# ActionItem Json Serializer
 class ActionItemSerializer < ActiveModel::Serializer
   attributes :id, :description, :deleted, :board_id, :column_id, :user_id
 

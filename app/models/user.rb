@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# User Model
 class User < ApplicationRecord
   # encrypt password
   has_secure_password

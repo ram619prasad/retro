@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class AuthorizeUserTest < ActiveSupport::TestCase
@@ -13,28 +15,32 @@ class AuthorizeUserTest < ActiveSupport::TestCase
       assert_equal @user, user
     end
 
-    should 'raise ExceptionHandler::MissingToken when no authorization header is sent' do
-      exception = assert_raises ExceptionHandler::MissingToken do
+    should 'raise ExceptionHandler::MissingToken when no' \
+           'authorization header is sent' do
+      assert_raises ExceptionHandler::MissingToken do
         AuthorizeUser.call({})
       end
 
-      assert_equal 'Invalid request. No Authorization token present in headers.', exception.message
+      assert_equal 'Invalid request. No Authorization token' \
+                   'present in headers.', exception.message
     end
 
-    should 'raise ExceptionHandler::InvalidToken when an invalid token is sent in header' do
-        api_token = @api_token.gsub!(/\d+/, 'a')
-        exception = assert_raises ExceptionHandler::InvalidToken do
-            AuthorizeUser.call({ 'Authorization' => api_token })
-        end
+    should 'raise ExceptionHandler::InvalidToken when an invalid' \
+           'token is sent in header' do
+      api_token = @api_token.gsub!(/\d+/, 'a')
+      assert_raises ExceptionHandler::InvalidToken do
+        AuthorizeUser.call('Authorization' => api_token)
+      end
     end
 
-    should 'raise ExceptionHandler::InvalidToken when a user is not found with the given token' do
-       @user.destroy
-       exception = assert_raises ExceptionHandler::InvalidToken do
+    should 'raise ExceptionHandler::InvalidToken when a user is not' \
+           'found with the given token' do
+      @user.destroy
+      assert_raises ExceptionHandler::InvalidToken do
         AuthorizeUser.call(@headers)
-       end
+      end
 
-       assert_equal 'Invalid Token', exception.message
+      assert_equal 'Invalid Token', exception.message
     end
   end
 end

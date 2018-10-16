@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Board Model
 class Board < ApplicationRecord
   # Associations
   belongs_to :user
@@ -9,8 +12,8 @@ class Board < ApplicationRecord
   paginates_per 20
 
   # Scopes
-  default_scope {where('deleted is not true')}
-  scope :active, -> { where(deleted: false)}
+  default_scope { where('deleted is not true') }
+  scope :active, -> { where(deleted: false) }
   scope :deleted, -> { unscoped.where(deleted: true) }
 
   # Validations

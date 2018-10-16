@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Column Model
 class Column < ApplicationRecord
   # Associations
   belongs_to :board
@@ -9,11 +12,15 @@ class Column < ApplicationRecord
   validate :hex_code_validation
 
   # Scopes
-  default_scope {where('deleted is not true')}
-  scope :deleted, -> { where(deleted: true)}
+  default_scope { where('deleted is not true') }
+  scope :deleted, -> { where(deleted: true) }
 
   private
+
   def hex_code_validation
-    errors.add(:hex_code, "Invalid hexcode") unless hex_code && (hex_code.length == 4 || hex_code.length == 7)
+    return unless hex_code
+
+    errors.add(:hex_code, 'Invalid hexcode') if hex_code.length == 4 ||
+                                                hex_code.length == 7
   end
 end
