@@ -12,7 +12,7 @@ class Board < ApplicationRecord
   paginates_per 20
 
   # Scopes
-  default_scope { where('deleted is not true') }
+  default_scope { where('boards.deleted is not true') }
   scope :active, -> { where(deleted: false) }
   scope :deleted, -> { unscoped.where(deleted: true) }
 

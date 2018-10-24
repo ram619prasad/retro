@@ -12,7 +12,7 @@ class Column < ApplicationRecord
   validate :hex_code_validation
 
   # Scopes
-  default_scope { where('deleted is not true') }
+  default_scope { where('columns.deleted is not true') }
   scope :deleted, -> { where(deleted: true) }
 
   private
